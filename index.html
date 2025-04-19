@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" 
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="style.css">
+	<link rel="shortcut icon" href="images/pngegg.png" type="image/x-icon">
+	<title>Ultimate Pokedex w/ voice</title>
+</head>
+<body>
+	<div class="splash-screen">
+		<h1>THE ULTIMATE POKEDEX</h1>
+		<h2>WITH VOICE</h2>
+		<button>Press to start</button>
+	</div>
+	
+	<header>
+		<img src="images/pngegg.png" alt="" style="width: 50px">
+		<h1>THE ULTIMATE POKEDEX (with voice)</h1>
+	</header>
+	
+	<nav>
+		<h2>Pokemon Details</h2>
+		<h2>Pokémon List</h2>		
+	</nav>
+	
+	<main>
+		<div class="pokemon-details-screen screen">
+			<div class="project-explanation">
+				<i class="close" title="Close">X</i>
+				<h2>PROJECT EXPLANATION</h2>
+				<button class="test-speech" title="Test Speech">Test Speech</button>
+				<hr>
+				<ul>
+					<li>
+						The project centers around the Text-to-Speech API provided by Voice RSS.
+					</li>
+					<li>
+						While the project is themed around Pokémon, it only serves to make the site appealing 
+						and to have access to large amounts of data using the Poké API for the text-to-speech to use. 
+					</li>
+
+					<li>
+						To interact with the website, pick a Pokémon on the right-most panel to reveal its data. You then
+						click the "Evaluate Pokémon" button at the bottom panel and the text-to-speech will read out the
+						Pokémon's description.
+					</li>
+
+					<li>
+						Voice RSS provides a variety of voices to choose from in different genders and accents. To select
+						a voice, just click on the dropdown at the bottom panel, and select the name of your voice and it 
+						will change respectively.
+					</li>
+					
+					<li>
+						<b>NOTE:</b> There might be slight delays when it comes to using the Voice API, so with that, we made it so
+						that the button of the prompt will turn green to let you know that the Text-to-Speech is being processed.
+						The data is retrieved from APIs after all and might also rely on the strength of your internet connection.
+					</li>
+				</ul>
+			</div>
+			
+			<img class="pokemon-sprite" src="" alt="Pokemon">
+			
+			<div class="description-screen"></div>
+			
+			<div class="bottom-panel">
+				<div class="input-panel">
+					<button class="toggle-explanation" title="Toggle Explanation">i</button>
+					<select name="voice" id="voiceSelect" title="Voice Select">
+						<optgroup label="English (Australia)">
+							<option value="Evie">Evie</option>
+							<option value="Zoe">Zoe</option>
+							<option value="Isla">Isla</option>
+							<option value="Jack">Jack</option>
+						</optgroup>
+
+						<optgroup label="English (US)">
+							<option value="Linda">Linda</option>
+							<option value="Amy">Amy</option>
+							<option value="Mary">Mary</option>
+							<option value="John">John</option>
+							<option value="Mike">Mike</option>
+						</optgroup>
+
+						<optgroup label="English (Canada)">
+							<option value="Rose">Rose</option>
+							<option value="Clara">Clara</option>
+							<option value="Emma">Emma</option>
+							<option value="Mason">Mason</option>
+						</optgroup>
+						
+						<optgroup label="English (UK)">
+							<option value="Alice">Alice</option>
+							<option value="Nancy">Nancy</option>
+							<option value="Lily">Lily</option>
+							<option value="Harry">Harry</option>
+						</optgroup>
+						
+						<optgroup label="English (Ireland)">
+							<option value="Oran">Oran</option>
+						</optgroup>
+						
+						<optgroup label="English (India)">
+							<option value="Eka">Eka</option>
+							<option value="Jai">Jai</option>
+							<option value="Ajit">Ajit</option>
+						</optgroup>
+					</select>
+
+					<button class="speak-description" title="Evaluate Pokemon">Evaluate Pokemon</button>
+					<button class="toggle-music" title="Toggle Music">Toggle Music</button>
+					<button class="toggle-legacy-cries" title="Use Legacy Cries">Use Legacy Cries</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="pokemon-list-screen screen">
+			<ul class="pokemon-list">
+			</ul>
+		</div>
+	</main>
+	
+	<footer>
+		<p>&copy; 2025 Brought to you by: JC Cordero, Jorella Dayrit, Angelica Farre, and Bea Guiao. All rights reserved, jk.</p>
+	</footer>
+	<script src="index.js"></script>
+</body>
+</html>
