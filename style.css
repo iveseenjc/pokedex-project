@@ -205,6 +205,9 @@ main {
 			border-radius: 50rem;
 			border: 1px solid gray;
 			font-size: 2rem;
+
+			width: 4rem;
+			height: 4rem;
 		}
 		
 		button, select {
@@ -231,10 +234,6 @@ main {
 		font-weight: bold;
 		font-size: 1.5rem;
 		color: white;
-	}
-	
-	input[type="checkbox"] {
-		
 	}
 }
 

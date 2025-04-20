@@ -37,7 +37,7 @@ async function playTextToSpeech(text, voiceActor = "Mary", pitch = 1.0, volume =
 	);
 
 	const searchParams = new URLSearchParams({
-		key: "69ce1bd863e645349bafdf0108128040",
+		key: getAccessToken(),
 		src: text,
 		hl: voicesList[voiceActor],
 		v: voiceActor,
@@ -45,9 +45,17 @@ async function playTextToSpeech(text, voiceActor = "Mary", pitch = 1.0, volume =
 		c: "wav",
 		f: "16khz_16bit_stereo"
 	});
-
+	
 	try {
 		const response = await fetch(`https://api.voicerss.org/?${searchParams}`);
+		
+		if (response.status === 401) {
+			console.warn("Unauthorized access. Token might be invalid or expired.");
+			stopTextToSpeech();
+			return;
+		}
+		
+		
 		const arrayBuffer = await response.arrayBuffer();
 		const decodedAudio = await audioContext.decodeAudioData(arrayBuffer);
 
@@ -169,16 +177,7 @@ async function loadInitialPokemon() {
 		allLoaded = true;
 	}
 }
-async function playSpeechWithColorFeedback(
-	button,
-	text,
-	voice,
-	pitch = 1.15,
-	volume = 0.5,
-	color = "limegreen",
-	resetColor = "",
-	modifyBackground = false
-) {
+async function playSpeechWithColorFeedback(button, text, voice, pitch = 1.15, volume = 0.5, color = "limegreen", resetColor = "", modifyBackground = false) {
 	if (!modifyBackground) {
 		button.style.color = color;
 	} else {
@@ -241,19 +240,22 @@ function createAudioWithControls(src = "", volume = 0.5, looping = false) {
 	return audio;
 }
 
-const sfxAudio = {
-	"select_sfx": createAudioWithControls("audio/sound_effects/select_sfx.mp3", 0.55),
-	"error_sfx": createAudioWithControls("audio/sound_effects/error_sfx.wav", 0.3),
-	"upwards_melody": createAudioWithControls("audio/sound_effects/upwards_melody.wav", 0.55),
-	"downwards_melody": createAudioWithControls("audio/sound_effects/downwards_melody.wav", 0.7),
-	"pokemon_cry": createAudioWithControls("", 0.125),
-	"withdraw": createAudioWithControls("audio/sound_effects/withdraw_sfx.wav", 0.25)
-};
+let accessToken = "";
 
-const musicAudio = {
-	"title_opening": createAudioWithControls("audio/music/title_screen_theme_opening.wav", 0.045), 
-	"title_looped": createAudioWithControls("audio/music/title_screen_theme_looped.wav", 0.045, true)
-};
+function setAccessToken(token) {
+	accessToken = token;
+	localStorage.setItem("accessToken", token);
+}
+
+function getAccessToken() {
+	if (!accessToken) {
+		accessToken = localStorage.getItem("accessToken");
+	}
+	return accessToken;
+}
+
+// Not really sure how to do this without backend
+setAccessToken("69ce1bd863e645349bafdf0108128040");
 
 function playBackgroundMusic() {
 	const loopedMusic = musicAudio["title_looped"];
@@ -270,6 +272,21 @@ function playBackgroundMusic() {
 		loopedMusic.playSound();
 	}
 }
+
+
+const sfxAudio = {
+	"select_sfx": createAudioWithControls("audio/sound_effects/select_sfx.mp3", 0.55),
+	"error_sfx": createAudioWithControls("audio/sound_effects/error_sfx.wav", 0.3),
+	"upwards_melody": createAudioWithControls("audio/sound_effects/upwards_melody.wav", 0.55),
+	"downwards_melody": createAudioWithControls("audio/sound_effects/downwards_melody.wav", 0.7),
+	"pokemon_cry": createAudioWithControls("", 0.125),
+	"withdraw": createAudioWithControls("audio/sound_effects/withdraw_sfx.wav", 0.25)
+};
+
+const musicAudio = {
+	"title_opening": createAudioWithControls("audio/music/title_screen_theme_opening.wav", 0.045), 
+	"title_looped": createAudioWithControls("audio/music/title_screen_theme_looped.wav", 0.045, true)
+};
 
 const audioContext = new AudioContext();
 
@@ -336,7 +353,7 @@ testSpeech.addEventListener("click", () => {
 	const text = liElements.map(li => li.innerText).join(' ');
 	sfxAudio["select_sfx"].playSound();
 
-	playSpeechWithColorFeedback(testSpeech, text, voiceSelect.value, 1.15, 0.5, "green", "orangered", true);
+	playSpeechWithColorFeedback(testSpeech, text, voiceSelect.value, 1.15, 0.75, "green", "orangered", true);
 });
 
 pokemonListElement .addEventListener("click", (e) => {
@@ -410,7 +427,7 @@ speakDescription.addEventListener("click", async () => {
 			descriptionScreen.textContent,
 			voiceSelect.value,
 			1.15,
-			0.5,
+			0.75,
 			"green",
 			"peru"
 		);
