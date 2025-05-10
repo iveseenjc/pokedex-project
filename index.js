@@ -506,7 +506,6 @@ function updateDetailsScreen(pokemonId) {
 	crySfx.src = pokemonData.name === "pikachu" || useLegacyCries 
 		? pokemonData.cries.legacy 
 		: pokemonData.cries.latest;
-	console.log(crySfx.src);
 	crySfx.playSound();
 	
 	pokemonSprite.src = pokemonData.sprites.front_default;
